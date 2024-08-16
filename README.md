@@ -13,5 +13,7 @@ The main library KRNL32.DLL is a Kernel32.dll wrapper that overrides the Sleep()
 The Sleep(0) call is necessary because some threads use Sleep() (with absurd values) to wait for I/O.
 
 ## Patcher
+This is an All-in-one kit, it already includes a wrapper that unpacks.
+
 The included Autopatcher allows to redirect the imported library, by changing the file name in the Import headers.\
 You can also do this manually by editing the files in hex editors or [CFF Explorer](https://ntcore.com/explorer-suite/).
