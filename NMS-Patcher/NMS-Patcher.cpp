@@ -69,7 +69,7 @@ int patchFile(const char filename[]) {
 	FILE* hfile = NULL;
 	fopen_s(&hfile, filename, "r+b");
 	if (hfile == NULL) {
-		cout << "NOT EXIST" << endl;
+		cout << "FAILED: NOT EXIST" << endl;
 		return -1;
 	}
 
@@ -182,6 +182,10 @@ int main(int argc, char* argv[]) {
 	if (ODEPatch)
 		unpackODE();
 	patchAllFiles();
+
+	//Intelligence Test (hold cout result)
+	char enterstr[1] = { 0 };
+	cin.getline(enterstr, 1);
 }
 
 // Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
