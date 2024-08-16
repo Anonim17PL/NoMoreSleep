@@ -1,0 +1,6 @@
+LIBRARY KRNL32.DLL
+EXPORTS
+Sleep=SleepWr
+CreateThread=CreateThreadWr
+SetThreadPriority=SetThreadPriorityWr
+GetProcAddress=GetProcAddressWr   @1
