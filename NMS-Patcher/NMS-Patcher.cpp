@@ -84,18 +84,20 @@ int patchFile(const char filename[]) {
 	while (!feof(hfile)) {
 		size_t readed = fread(buffer, 1, 13, hfile);
 		//cout << readed << endl;
-		if (dotcount) {
+		if (dotcount > 100000) {
 			dotcount = 0;
 			cout << ".";
 		}
 		if (readed < 13)
 			break;
+		dotcount++;
+
 		buffer[12] = 0;
 		if (_stricmp(buffer, tofind) == 0) {
 			fseek(hfile, -13, SEEK_CUR);
 			fwrite(toreplace, 13, 1, hfile);
 			count++;
-			dotcount++;
+			cout << "*";
 		}
 		else {
 			if (feof(hfile))
@@ -151,6 +153,22 @@ void unpackODE() {
 	fclose(hfile);
 }
 
+
+bool questionODE() {
+	if (ODEPatch)
+		return true;
+
+	cout << "Do you also want to use the newer version of Open Dynamics Engine?\n"
+		"This version has been compiled with newer tools with optimizations, but the functionality of this version has not been fully tested.\n\n"
+		"If you want to keep a backup copy of the original file, copy the ODE.DLL file to a safe location NOW.\n\n"
+		"Extract and replace the file? (Y/N)" << endl;
+
+	char enterstr[100] = { 0 };
+	cin.getline(enterstr, 100);
+	return (_stricmp(enterstr, "Y") == 0 || _stricmp(enterstr, "YES") == 0) ? true : false;
+}
+
+
 int main(int argc, char* argv[]) {
 	cout << "No More Sleep AutoPatcher - OMSI 2 version" << endl;
 	cout << endl;
@@ -159,6 +177,7 @@ int main(int argc, char* argv[]) {
 	cout << "Starting..." << endl;
 	if (warnInfo())
 		exit(1);
+	ODEPatch = questionODE();
 	unpackNMS();
 	if (ODEPatch)
 		unpackODE();
